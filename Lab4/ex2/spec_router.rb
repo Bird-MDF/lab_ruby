@@ -30,12 +30,12 @@ RSpec.describe Router do
     it 'create new post and show' do
         allow_any_instance_of(Router).to receive(:gets).and_return("1", "q")
         allow_any_instance_of(Resource).to receive(:gets).and_return("POST", "GET", "show", "q")
-        allow_any_instance_of(PostsController).to receive(:gets).and_return("Пост", "0")
+        allow_any_instance_of(PostsController).to receive(:gets).and_return("Пост", 0)
         router = Router.new()
         expect(router.init)
         expect do
           PostsController.new.show
-        end.to output("Введите id:\n0: Пост\n").to_stdout
+        end.to output("Введите id:\nError: введите корректный id\n").to_stdout
     end
 
     it 'create new post and show error' do
